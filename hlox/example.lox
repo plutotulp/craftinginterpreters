@@ -1,0 +1,7 @@
+var x = 2;
+wile (x!=0) {
+  print x;
+  // make progress
+  x = x - 1;
+}
+"dette er en feil

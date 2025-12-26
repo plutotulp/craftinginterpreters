@@ -1,0 +1,50 @@
+cabal-version:      3.14
+name:               hlox
+version:            0.1.0.0
+-- A short (one-line) description of the package.
+-- synopsis:
+-- A longer description of the package.
+-- description:
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Erlend Huru
+maintainer:         erlendpe@online.no
+-- copyright:
+category:           Language
+build-type:         Simple
+-- -- Extra doc files to be distributed with the package, such as a CHANGELOG or a README.
+-- extra-doc-files:    CHANGELOG.md
+-- Extra source files to be distributed with the package, such as examples, or a tutorial module.
+-- extra-source-files:
+
+common shared
+    ghc-options: -Weverything -Wno-unsafe -Wno-missing-safe-haskell-mode -Wno-implicit-prelude -Wno-missing-import-lists -threaded -rtsopts=all
+    -- ghc-options: -Wall -threaded -rtsopts=all
+    default-language: GHC2024
+    -- other-extensions: ImportQualifiedPost
+    build-depends:    base ^>=4.22.0.0,
+
+library
+    import:           shared
+    exposed-modules:  Scanner
+    -- other-modules:
+    -- other-extensions:
+    build-depends:    mtl ^>= 2.3.1
+    hs-source-dirs:   lib
+
+executable hlox
+    import:           shared
+    main-is:          Main.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:    hlox
+    hs-source-dirs:   app
+
+test-suite hlox-test
+    import:           shared
+    -- other-modules:
+    -- other-extensions:
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    build-depends:    hlox
