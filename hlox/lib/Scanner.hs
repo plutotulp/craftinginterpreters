@@ -128,6 +128,13 @@ hadError = not . null . errors
 
 -- | The main function of the Scanner module. Scans text into Tokens
 -- while also accumulating all Errors.
+--
+-- Note that this is a streaming scanner, meaning that it will only
+-- scan as far into the text as it needs to produce the tokens you
+-- consume from it. In order to fully scan a text, the callee must
+-- fully evaluate all tokens. This also means you can stop at the
+-- first error if you want, simply by checking for a first error and
+-- branching off to do something else if found.
 scanTokens :: String -> Result
 scanTokens = toResult . flip State.execState initScanner . go
   where
