@@ -8,6 +8,7 @@ import System.IO qualified as IO
 import System.IO.Error qualified as IOError
 
 import Scanner qualified
+import Parser qualified
 
 main :: IO ()
 main = do
@@ -53,8 +54,14 @@ runPrompt = hello >> go
 
 run :: String -> IO Scanner.Result
 run str = do
-  let res = Scanner.scanTokens str
-  mapM_ print $ Scanner.tokens res
-  mapM_ print $ Scanner.errors res
-  print res
-  pure res
+  let sRes = Scanner.scanTokens str
+      pRes = Parser.parse (Scanner.tokens sRes)
+  putStrLn "TOKENS:"
+  mapM_ print $ Scanner.tokens sRes
+  putStrLn "SCANNER ERRORS:"
+  mapM_ print $ Scanner.errors sRes
+  putStrLn "AST:"
+  mapM_ print $ Parser.ast pRes
+  putStrLn "PARSER ERRORS:"
+  mapM_ print $ Parser.errors pRes
+  pure sRes
